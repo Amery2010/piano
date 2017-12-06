@@ -1,0 +1,40 @@
+body {
+  margin: 0;
+  padding: 0;
+  color: #222;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: 300;
+}
+
+#piano {
+  position: relative;
+}
+
+span {
+  display: block;
+  position: absolute;
+  border: #555 solid 1px;
+  box-sizing: border-box;
+}
+
+text {
+  border: none;
+  background-color: #ccc;
+  font-size: 12px;
+}
+
+.piano-key {
+  transition: background-color 150ms;
+}
+
+.piano-key--ivory {
+  background-color: #fff;
+}
+.piano-key--ivory.active {
+  box-shadow: 0px -2px 3px #555 inset;
+  background: linear-gradient(#fff, #ddd);
+}
+
+.piano-key--ebony {
+  background-color: #000;
+}

@@ -1,0 +1,23 @@
+{
+  "name": "web-piano",
+  "version": "1.0.0",
+  "description": "The web piano which is based on Web Audio API",
+  "main": "index.js",
+  "scripts": {
+    "start": "gulp start",
+    "build": "gulp build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Amery2010/piano.git"
+  },
+  "keywords": [
+    "piano"
+  ],
+  "author": "Amery2010",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Amery2010/piano/issues"
+  },
+  "homepage": "https://github.com/Amery2010/piano#readme"
+}
