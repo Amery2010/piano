@@ -49,7 +49,7 @@ class Piano {
       const keyRect = document.createElement('span');
       const keyDeets = this.getKeyDeets(key.pos);
       let x = left;
-      let height = window.innerWidth;
+      let height = 250;
       let width = 44;
 
       if (keyDeets.color === COLORS.EBONY) {

@@ -8,25 +8,22 @@ class Audio {
   listen () {
     const pianoKeys = [...document.querySelectorAll('.piano-key')];
     let voice = null
-    let timer = null;
     const play = ev => {
       if (this.findTarget(pianoKeys, ev.target)) {
-        clearTimeout(timer)
         voice = this.pianoKeyDown(ev.target);
-        timer = setTimeout(() => {
-          this.pianoKeyUp(ev.target, voice);
-        }, 1200)
       }
     }
     const stop = ev => {
       if (this.findTarget(pianoKeys, ev.target)) {
-        clearTimeout(timer)
         this.pianoKeyUp(ev.target, voice);
       }
     }
 
     document.addEventListener('mousedown', play, false);
     document.addEventListener('mouseleave', stop, false);
+    document.addEventListener('mousemove', () => {
+      return false;
+    }, false);
     document.addEventListener('mouseup', stop, false);
     document.addEventListener('mouseup', () => {
       [...document.querySelectorAll('.active')].forEach(item => {
