@@ -7,32 +7,25 @@ class Audio {
   }
   listen () {
     const pianoKeys = [...document.querySelectorAll('.piano-key')];
-    let voice = null
     const play = ev => {
       if (this.findTarget(pianoKeys, ev.target)) {
-        voice = this.pianoKeyDown(ev.target);
+        this.pianoKeyDown(ev.target);
       }
-    }
+    };
     const stop = ev => {
       if (this.findTarget(pianoKeys, ev.target)) {
-        this.pianoKeyUp(ev.target, voice);
+        this.pianoKeyUp(ev.target);
       }
-    }
+    };
+    const EVENT_DOWN = /Mobile/i.test(navigator.userAgent) ? 'touchstart' : 'mousedown';
+    const EVENT_UP = /Mobile/i.test(navigator.userAgent) ? 'touchend' : 'mouseup';
 
-    document.addEventListener('mousedown', play, false);
-    document.addEventListener('mouseleave', stop, false);
-    document.addEventListener('mousemove', () => {
-      return false;
-    }, false);
-    document.addEventListener('mouseup', stop, false);
-    document.addEventListener('mouseup', () => {
+    document.addEventListener(EVENT_DOWN, play, false);
+    document.addEventListener(EVENT_UP, stop, false);
+    document.addEventListener(EVENT_UP, () => {
       [...document.querySelectorAll('.active')].forEach(item => {
         item.classList.remove('active');
       });
-      if (voice) {
-        this.stopVoice(voice);
-        voice = null;
-      }
     }, false);
   }
   findTarget (group, target) {
@@ -51,12 +44,8 @@ class Audio {
     target.classList.add('active');
     return meta ? this.playVoice(meta.hz) : null;
   }
-  pianoKeyUp (target, voice) {
-    if (voice) {
-      target.classList.remove('active');
-      this.stopVoice(voice);
-      voice = null;
-    }
+  pianoKeyUp (target) {
+    target.classList.remove('active');
   }
   playVoice (hz) {
     // 创建音调控制对象  
@@ -74,20 +63,13 @@ class Audio {
     // 先把当前音量设为0  
     gainNode.gain.setValueAtTime(0, this.audioCtx.currentTime);
     // 0.01秒时间内音量从刚刚的0变成1，线性变化 
-    gainNode.gain.linearRampToValueAtTime(1, this.audioCtx.currentTime + 0.01);
+    gainNode.gain.linearRampToValueAtTime(1, this.audioCtx.currentTime + 0.02);
     // 声音走起 
     oscillator.start(this.audioCtx.currentTime);
-
-    return {
-      oscillator,
-      gainNode
-    };
-  }
-  stopVoice ({ oscillator, gainNode }) {
     // 1秒时间内音量从刚刚的1变成0.001，指数变化 
-    gainNode.gain.exponentialRampToValueAtTime(0.001, this.audioCtx.currentTime + 1);
+    gainNode.gain.exponentialRampToValueAtTime(0.002, this.audioCtx.currentTime + 1.2);
     // 1秒后停止声音 
-    oscillator.stop(this.audioCtx.currentTime + 1);
+    oscillator.stop(this.audioCtx.currentTime + 1.2);
   }
 }
 

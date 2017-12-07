@@ -38,35 +38,37 @@ class Piano {
   }
   render () {
     // key dimensions from http://www.rwgiangiulio.com/construction/manual/
+    let scale = 1;
     let left = 0;
     const blackKeyGroup = document.createElement('div');
     const whiteKeyGroup = document.createElement('div');
 
     if (this.mode === 'normal') {
       this.keys = this.keys.splice(27, 36);
+      scale = 2;
     }
     this.keys.forEach(key => {
       const keyRect = document.createElement('span');
       const keyDeets = this.getKeyDeets(key.pos);
       let x = left;
-      let height = 250;
-      let width = 44;
+      let height = 125 * scale;
+      let width = 22 * scale;
 
       if (keyDeets.color === COLORS.EBONY) {
-        height -= 90;
-        width = 22;
+        height -= 45 * scale;
+        width = 11 * scale;
 
         if (keyDeets.shift === SHIFTS.LEFT) {
-          x = left - 14;
+          x = left - 7 * scale;
         } else if (keyDeets.shift === SHIFTS.MIDDLE) {
-          x = left - 10;
+          x = left - 5 * scale;
         } else if (keyDeets.shift === SHIFTS.RIGHT) {
-          x = left - 6;
+          x = left - 3 * scale;
         } else {
           console.warn('SHIFT was not set');
         }
       } else {
-        left += 44;
+        left += 22 * scale;
         /* const keyText = document.createElementNS(ns, 'text');
         keyText.textContent = key.pos;
 
@@ -75,10 +77,9 @@ class Piano {
         keyText.setAttribute('text-anchor', 'middle');
         whiteKeyGroup.appendChild(keyText);*/
       }
-
-      keyRect.style.borderRadius = 4 + 'px';
+      
       keyRect.style.left = x + 'px';
-      keyRect.style.top = 28 + 'px';
+      keyRect.style.top = 14 * scale + 'px';
       keyRect.style.width = width + 'px';
       keyRect.style.height = height + 'px';
       keyRect.setAttribute('data-pos', key.pos);
